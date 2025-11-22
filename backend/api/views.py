@@ -17,3 +17,5 @@ from .serializers import (
     SubscriptionSerializer
 )
 
+def home(request):
+    pass
