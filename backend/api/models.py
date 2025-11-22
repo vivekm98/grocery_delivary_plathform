@@ -1,26 +1,56 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.db import models
+from django.contrib.auth.models import User
 
+# -------------------------
+# Category Choices
+# -------------------------
 CATEGORY_CHOICES = (
-    ('fruits', 'Fruits'),
-    ('vegetables', 'Vegetables'),
-    ('dairy', 'Dairy'),
-    ('household', 'Household'),
+    ('Fruits', 'Fruits'),
+    ('Vegetables', 'Vegetables'),
+    ('Dairy', 'Dairy'),
+    ('Household', 'Household'),
+    ('Snacks', 'Snacks'),
 )
 
+# -------------------------
+# Unit Choices per Category
+# -------------------------
+UNIT_CHOICES = (
+    ('kg', 'kg'),
+    ('liter', 'liter'),
+    ('piece', 'piece'),
+)
 
+CATEGORY_DEFAULT_UNIT = {
+    'Fruits': 'kg',
+    'Vegetables': 'kg',
+    'Dairy': 'liter',
+    'Household': 'piece',
+    'Snacks': 'piece',
+}
+
+# -------------------------
+# Product Model
+# -------------------------
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.FloatField()
-    unit = models.CharField(max_length=20)       # kg, litre, piece, etc.
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    image = models.URLField(blank=True)          # Simple URL for beginners
+    unit = models.CharField(max_length=20, choices=UNIT_CHOICES, blank=True)
+    stock = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.unit:
+            self.unit = CATEGORY_DEFAULT_UNIT.get(self.category, 'piece')
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
-
 
 
 class Cart(models.Model):
@@ -57,3 +87,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} - {self.user.username}"
+
+
+
+
