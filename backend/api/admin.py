@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cart,Product,DeliverySlot,Order
+from .models import Cart, Product, DeliverySlot, Order, CustomUser
 from .models import Category,Unit,OrderItem,Subscription
 # Register your models here.
 
@@ -17,5 +17,5 @@ admin.site.register(Category)
 admin.site.register(Unit)
 admin.site.register(OrderItem)
 admin.site.register(Subscription)
-
+admin.site.register(CustomUser)
 

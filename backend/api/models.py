@@ -1,5 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=100,blank=True,null=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.email
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100,unique=True)
@@ -26,7 +37,7 @@ class Product(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
@@ -52,7 +63,7 @@ class Order(models.Model):
         ("Cancelled", "Cancelled"),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     slot = models.ForeignKey(DeliverySlot, on_delete=models.SET_NULL, null=True)
     total_price = models.FloatField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
@@ -85,7 +96,7 @@ class Subscription(models.Model):
         ('monthly', 'Monthly'),
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     frequency = models.CharField(max_length=20, choices=FREQUENCY_CHOICES)
     next_delivery_date = models.DateField()
