@@ -2,9 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# -------------------------
-# CATEGORY LIST (Optional but clean)
-# -------------------------
 CATEGORY_CHOICES = (
     ('fruits', 'Fruits'),
     ('vegetables', 'Vegetables'),
@@ -13,9 +10,6 @@ CATEGORY_CHOICES = (
 )
 
 
-# -------------------------
-# PRODUCT MODEL
-# -------------------------
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -28,9 +22,7 @@ class Product(models.Model):
         return self.name
 
 
-# -------------------------
-# CART MODEL
-# -------------------------
+
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -40,9 +32,7 @@ class Cart(models.Model):
         return f"{self.user.username} → {self.product.name}"
 
 
-# -------------------------
-# DELIVERY SLOT MODEL
-# -------------------------
+
 class DeliverySlot(models.Model):
     slot = models.CharField(max_length=50)      # Morning / Afternoon / Evening
 
@@ -50,9 +40,7 @@ class DeliverySlot(models.Model):
         return self.slot
 
 
-# -------------------------
-# ORDER MODEL
-# -------------------------
+
 class Order(models.Model):
     STATUS_CHOICES = (
         ("Pending", "Pending"),
