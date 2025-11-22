@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Cart,Product,DeliverySlot,Order
+from .models import Category,Unit,OrderItem,Subscription
 # Register your models here.
 
 class ProductAdmin(admin.ModelAdmin):
@@ -12,4 +13,9 @@ admin.site.register(Cart)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(DeliverySlot)
 admin.site.register(Order,OrderAdmin)
+admin.site.register(Category)
+admin.site.register(Unit)
+admin.site.register(OrderItem)
+admin.site.register(Subscription)
+
 
