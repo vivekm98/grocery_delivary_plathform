@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'grocery_db',
+        'NAME':'grocery_shop',
         'USER':'root',
         'PASSWORD':'vicky@987',
         'HOST':'localhost',
@@ -145,4 +145,3 @@ MEDIA_ROOT = BASE_DIR/'media'
 
 
 #----------Abstract user model
-AUTH_USER_MODEL = 'api.CustomUser'

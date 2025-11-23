@@ -7,33 +7,49 @@ from .models import DeliverySlot
 from .models import Order
 from .models import OrderItem
 from .models import Subscription
-from .models import CustomUser
+from django.contrib.auth.models import User
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True,required=True)
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True,min_length=8)
     class Meta:
-        model = CustomUser
-        fields = ['email','password','username']
+        model = User
+        fields = ['email','password']
 
-    def create(self,validated_data):
-        password = validated_data.pop('password')
-        user = CustomUser(**validated_data)
-        user.set_password(password)
-        user.save()
+    def create(self, validated_data):
+        email = validated_data['email']
+        password = validated_data['password']
+
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({'email':'Email already exist.'})
+        base_username =email.split('@')[0]
+        username = base_username
+        counter = 1
+        while User.objects.filter(username=username).exists():
+            username = f"{base_username}{counter}"
+            counter += 1
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
         return user
 
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "name"
+        fields = ['name']
 
 
 class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
-        fields = "name"
+        fields = ['name']
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -68,4 +84,5 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = "__all__"
+
 
