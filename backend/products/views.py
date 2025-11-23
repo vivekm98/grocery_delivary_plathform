@@ -17,8 +17,14 @@ class CategoryRetrieveView(generics.RetrieveUpdateDestroyAPIView):
 
 class Posterview(generics.ListCreateAPIView):
     queryset = Poster.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = PosterSerializer
     permission_classes = [IsAdminUser]
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return [AllowAny()]
+        return [IsAdminUser()]
+
 
 class UnitListView(generics.ListCreateAPIView):
     queryset = Unit.objects.all()
@@ -37,9 +43,9 @@ class ProductListView(generics.ListCreateAPIView):
     permission_classes = [IsAdminUser]
 
     def get_permissions(self):
-        if self.request.method == "POST":
-            return [IsAdminUser()]
-        return [AllowAny()]
+        if self.request.method == "GET":
+            return [AllowAny()]
+        return [IsAdminUser()]
 
 class ProductRetrieView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
