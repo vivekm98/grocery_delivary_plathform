@@ -18,6 +18,8 @@ class UnitSerializer(serializers.ModelSerializer):
         fields = ['name']
 
 class ProductSerializer(serializers.ModelSerializer):
+    unit_name = serializers.CharField(source='unit.name', read_only=True)
+    category_name = serializers.CharField(source='category.name', read_only=True)
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = ['id','name','description','price','unit_name','category_name','stock','image',]
