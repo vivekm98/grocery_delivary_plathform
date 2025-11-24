@@ -4,7 +4,7 @@ from .models import Category,Poster,Product,Unit
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name']
+        fields = ['name','description','image']
 
 class PosterSerializer(serializers.ModelSerializer):
     class Meta:
