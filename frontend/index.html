@@ -70,14 +70,27 @@
 
  <!-------------- category----------------->
 
- <div class="container mt-4">
-  <h4 class="mb-3">Shop by Categories</h4>
+ <div class="position-relative my-4">
+  <button id="leftBtn" class="btn btn-light position-absolute top-50 start-0 translate-middle-y">‹</button>
+
   <div class="category-scroll" id="categoryContainer"></div>
+
+  <button id="rightBtn" class="btn btn-light position-absolute top-50 end-0 translate-middle-y">›</button>
 </div>
 
 
 <!-- ---------category-end---------------------------->
 
+
+
+<!----- search bar --------------->
+ <div class="container mt-5">
+  <h4 class="mb-3">Search Products</h4>
+
+  <!-- Search bar -->
+  <div class="mb-3">
+    <input type="text" id="productSearch" class="form-control" placeholder="Search products...">
+  </div>
 
 
 <!--- products--------------------->
@@ -138,9 +151,35 @@
     </div>
 </footer>
 
+ <script src="js/cart.js"></script>
  <script src="js/carousel.js"></script>
  <script src="js/category.js"></script>
  <script src="js/products.js"></script>
+
+     <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    // Hide login/register
+    document.getElementById("login-nav").style.display = "none";
+    document.getElementById("register-nav").style.display = "none";
+
+    // Show logout
+    document.getElementById("logout-nav").style.display = "block";
+  } else {
+    document.getElementById("login-nav").style.display = "block";
+    document.getElementById("register-nav").style.display = "block";
+    document.getElementById("logout-nav").style.display = "none";
+  }
+});
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "login.html"; // redirect to login page
+}
+</script>
+
 
 </body>
 </html>
