@@ -1,81 +1,96 @@
-// cart.js
+document.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+        return;
+    }
 
-// Load cart items from localStorage
-function loadCart() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const container = document.getElementById("cartContainer");
-  container.innerHTML = "";
+    const container = document.getElementById("cartContainer");
+    const cartTotal = document.getElementById("cartTotal");
 
-  if (cart.length === 0) {
-    container.innerHTML = "<p>Your cart is empty.</p>";
-    document.getElementById("cartTotal").textContent = "0.00";
-    return;
-  }
+    async function loadCart() {
+        container.innerHTML = "Loading cart...";
+        try {
+            const res = await fetch("http://127.0.0.1:8000/api/cart/", {
+                headers: { "Authorization": "Bearer " + user.access }
+            });
+            const data = await res.json();
 
-  let total = 0;
+            if (!Array.isArray(data) || data.length === 0) {
+                container.innerHTML = "<p>Your cart is empty.</p>";
+                cartTotal.innerText = "";
+                return;
+            }
 
-  cart.forEach(item => {
-    // Fetch product details from API
-    fetch(`http://127.0.0.1:8000/api/products/${item.id}/`)
-      .then(res => res.json())
-      .then(product => {
-        const subtotal = product.price * item.quantity;
-        total += subtotal;
+            container.innerHTML = "";
+            let total = 0;
 
-        const card = document.createElement("div");
-        card.classList.add("card", "mb-2");
-        card.innerHTML = `
-          <div class="card-body d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-              <img src="${product.image || 'assets/placeholder.png'}" width="60" class="me-3">
-              <div>
-                <h6 class="m-0">${product.name}</h6>
-                <small>${product.unit_name} | $${product.price.toFixed(2)} each</small>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <input type="number" min="1" value="${item.quantity}" class="form-control form-control-sm me-2 quantity-input" data-id="${item.id}" style="width:70px;">
-              <button class="btn btn-sm btn-danger remove-btn" data-id="${item.id}">Remove</button>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
+            data.forEach(item => {
+                const itemTotal = item.product.price * item.quantity;
+                total += itemTotal;
 
-        document.getElementById("cartTotal").textContent = total.toFixed(2);
+                container.innerHTML += `
+                    <div class="card p-3 mb-3 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <img src="${item.product.image}" style="height:80px; width:80px; object-fit:cover;" class="me-3">
+                            <div class="flex-grow-1">
+                                <h5>${item.product.name}</h5>
+                                <p class="text-muted mb-1">${item.product.unit_name}</p>
+                                <p class="text-success mb-1">₹${item.product.price} × ${item.quantity} = ₹${itemTotal}</p>
+                            </div>
+                            <div>
+                                <input type="number" min="1" value="${item.quantity}" class="form-control mb-2" style="width:80px;" onchange="updateQuantity(${item.id}, this.value)">
+                                <button class="btn btn-sm btn-danger w-100" onclick="removeItem(${item.id})">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
 
-        // Update quantity
-        card.querySelector(".quantity-input").addEventListener("change", e => {
-          const qty = parseInt(e.target.value);
-          updateCartItem(item.id, qty);
-        });
+            cartTotal.innerText = "Total: ₹" + total;
+        } catch (err) {
+            console.error(err);
+            container.innerHTML = "Error loading cart.";
+        }
+    }
 
-        // Remove item
-        card.querySelector(".remove-btn").addEventListener("click", e => {
-          removeCartItem(item.id);
-        });
-      });
-  });
-}
+    window.updateQuantity = async function(cartId, qty) {
+        try {
+            const res = await fetch(`http://127.0.0.1:8000/api/cart${cartId}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + user.access
+                },
+                body: JSON.stringify({ quantity: qty })
+            });
+            if (!res.ok) throw new Error("Failed to update quantity");
+            loadCart();
+        } catch (err) {
+            alert(err.message);
+        }
+    };
 
-// Update quantity in localStorage
-function updateCartItem(id, quantity) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart = cart.map(item => item.id == id ? { ...item, quantity } : item);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  loadCart();
-}
+    window.removeItem = async function(cartId) {
+        if (!confirm("Are you sure you want to remove this item?")) return;
+        try {
+            const res = await fetch(`http://127.0.0.1:8000/api/cart/${cartId}/`, {
+                method: "DELETE",
+                headers: { "Authorization": "Bearer " + user.access }
+            });
+            if (!res.ok) throw new Error("Failed to remove item");
+            loadCart();
+        } catch (err) {
+            alert(err.message);
+        }
+    };
 
-// Remove item from cart
-function removeCartItem(id) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart = cart.filter(item => item.id != id);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  loadCart();
-}
+    // Logout
+    document.getElementById("logout-link").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "login.html";
+    });
 
-// Checkout button
-document.getElementById("checkoutBtn").addEventListener("click", () => {
-  alert("Checkout not implemented yet!");
+    loadCart();
 });
-
-document.addEventListener("DOMContentLoaded", loadCart);

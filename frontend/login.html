@@ -44,38 +44,37 @@
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+    e.preventDefault();
 
-      const data = {
+    const data = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
-      };
+    };
 
-      try {
+    try {
         const response = await fetch("http://127.0.0.1:8000/api/login/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
         });
 
         const result = await response.json();
 
         if (response.ok) {
-          // Save JWT tokens in localStorage
-          localStorage.setItem("access", result.tokens.access);
-          localStorage.setItem("refresh", result.tokens.refresh);
+            localStorage.setItem("access", result.tokens.access);
+            localStorage.setItem("refresh", result.tokens.refresh);
+            localStorage.setItem("user", JSON.stringify(result.user));
 
-          alert("Login successful!");
-          window.location.href = "index.html"; // redirect to homepage
+            alert("Login successful!");
+            window.location.href = "home.html";
         } else {
-          // Show exact backend error
-          document.getElementById("msg").innerText = result.error || "Login failed";
+            document.getElementById("msg").innerText = result.error || "Login failed";
         }
-
-      } catch (error) {
+    } catch (error) {
         document.getElementById("msg").innerText = "Error connecting to server.";
-      }
-    });
+        console.error(error);
+    }
+});
   </script>
 </body>
 </html>
