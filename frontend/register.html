@@ -1,10 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup | Grocery Delivery</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    .signup-box {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-$END$
+  <div class="signup-box">
+    <h3 class="text-center mb-4">Create Your Account</h3>
+    <form id="signupForm">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email *</label>
+        <input type="email" id="email" class="form-control" placeholder="Enter your email" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password *</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter password" required />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+    </form>
+    <p class="text-center mt-3">
+      Already have an account? <a href="login.html">Login</a>
+    </p>
+    <p id="msg" class="text-center mt-2 text-danger"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const data = {
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
+  };
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/register/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert("Account created successfully!");
+      window.location.href = "login.html";
+    } else {
+      // Show the exact error returned by DRF
+      document.getElementById("msg").innerText = JSON.stringify(result);
+    }
+  } catch (error) {
+    document.getElementById("msg").innerText = "Error connecting to server.";
+  }
+});
+  </script>
 </body>
 </html>

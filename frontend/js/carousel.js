@@ -1,45 +1,25 @@
-// Fetch banners from Poster API
-async function fetchBanners() {
-    try {
-        const response = await fetch('http://localhost:8000/api/posters/');
-        const banners = await response.json();
-        displayBanners(banners);
-    } catch (error) {
-        console.error('Error fetching banners:', error);
-    }
-}
+const carouselInner = document.getElementById("carousel-inner");
+const carouselIndicators = document.getElementById("carousel-indicators");
 
-function displayBanners(banners) {
-    const indicators = document.getElementById('carousel-indicators');
-    const inner = document.getElementById('carousel-inner');
+fetch("http://localhost:8000/api/posters/")  // DRF API endpoint
+  .then(res => res.json())
+  .then(data => {
+    data.forEach((poster, index) => {
+      // Carousel item
+      const itemDiv = document.createElement("div");
+      itemDiv.className = index === 0 ? "carousel-item active" : "carousel-item";
+      itemDiv.innerHTML = `
+        <img src="${poster.image}" class="d-block w-100 carousel-img" alt="${poster.title || 'Poster'}">
+      `;
+      carouselInner.appendChild(itemDiv);
 
-    indicators.innerHTML = '';
-    inner.innerHTML = '';
-
-    banners.forEach((banner, index) => {
-        // Indicators
-        const indicator = `
-            <button type="button"
-                    data-bs-target="#bannerCarousel"
-                    data-bs-slide-to="${index}"
-                    class="${index === 0 ? 'active' : ''}">
-            </button>
-        `;
-        indicators.innerHTML += indicator;
-
-        // Slider Item
-        const item = `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                <img src="${banner.image}" class="d-block w-100" alt="Banner">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>${banner.title || ''}</h5>
-                    <p>${banner.description || ''}</p>
-                </div>
-            </div>
-        `;
-        inner.innerHTML += item;
+      // Indicator button
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("data-bs-target", "#bannerCarousel");
+      button.setAttribute("data-bs-slide-to", index);
+      if (index === 0) button.className = "active";
+      carouselIndicators.appendChild(button);
     });
-}
-
-// Load banners on page load
-fetchBanners();
+  })
+  .catch(err => console.error("Error fetching posters:", err));

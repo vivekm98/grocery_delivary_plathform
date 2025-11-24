@@ -1,0 +1,66 @@
+.navbar {
+  min-height: 100px; /* Set desired height */
+}
+
+body {
+  background-color: #E8F5E9; /* light green, fresh look */
+  font-family: Arial, sans-serif;
+  color: #333; /* dark text for contrast */
+}
+
+
+#bannerCarousel .carousel-item img {
+              height: 450px;      /* small height */
+               object-fit: cover;  /* fill nicely */
+         }
+        .card {
+            transition: all 0.2s ease-in-out;
+        }
+        footer a:hover {
+              color: #4CAF50;
+            text-decoration: underline;
+         }
+
+
+
+
+
+
+
+.category-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 10px;
+}
+
+.category-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.category-card {
+    min-width: 140px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+}
+
+.category-img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
