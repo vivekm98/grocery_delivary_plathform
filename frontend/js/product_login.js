@@ -1,8 +1,4 @@
 
-const access = localStorage.getItem("access");
-if (!access) {
-    window.location.href = "login.html";
-}
 document.addEventListener("DOMContentLoaded", () => {
     let allProducts = [];
     loadProducts();
