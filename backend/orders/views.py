@@ -5,6 +5,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny,IsAuthenticated
 # Create your views here.
 
+
 class DeliverySlotListView(generics.ListCreateAPIView):
     queryset = DeliverySlot.objects.all()
     serializer_class = DeliverySlotSerializer
@@ -16,10 +17,37 @@ class DeliverySlotRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class OrderListView(generics.ListCreateAPIView):
+from rest_framework import generics, permissions
+from .models import Order, OrderItem
+from cart.models import Cart
+from .serializers import OrderSerializer
+
+class OrderCreateView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        # Get cart items
+        user = self.request.user
+        cart_items = Cart.objects.filter(user=user)
+
+        # Calculate total
+        total = sum(item.product.price * item.quantity for item in cart_items)
+
+        order = serializer.save(user=user, total_price=total)
+
+        # Create order items
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                price_at_order=item.product.price
+            )
+
+        # Clear cart
+        cart_items.delete()
 
 class OrderRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()

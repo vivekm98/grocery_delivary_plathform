@@ -21,7 +21,7 @@ class Order(models.Model):
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
     address = models.TextField()
-    slot = models.ForeignKey(DeliverySlot, on_delete=models.SET_NULL, null=True)
+    slot = models.CharField(max_length=100)
     total_price = models.FloatField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
     created_at = models.DateTimeField(auto_now_add=True)

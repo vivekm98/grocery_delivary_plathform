@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Grocery Delivery</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/index.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grocery Delivery</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+    body { background: #f4f6f8; }
+    .navbar { background: #fff; }
+    .navbar-brand { font-weight: bold; font-size: 1.5rem; color: #28a745; }
+    .hero { background: #28a745; color: white; padding: 80px 0; text-align: center; }
+    .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+    .hero p { font-size: 1.2rem; }
+    .feature-card { border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center; padding: 20px; }
+    .feature-card i { font-size: 2rem; color: #28a745; margin-bottom: 10px; }
+    footer { background: #fff; padding: 20px 0; text-align: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+</style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold" href="index.html">GroceryShop</a>
+  <div class="container">
+    <a class="navbar-brand" href="index.html">GroceryDelivery</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,103 +32,80 @@
         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
         <li class="nav-item" id="login-nav"><a class="nav-link" href="login.html">Login</a></li>
         <li class="nav-item" id="register-nav"><a class="nav-link" href="signup.html">Register</a></li>
-        <li class="nav-item"><a class="nav-link" href="cart.html" id="cart-nav">Cart 🛒</a></li>
-        <li class="nav-item"><a class="nav-link" href="orders.html">Orders 📦</a></li>
-        <li class="nav-item" id="logout-nav" style="display:none;"><a class="nav-link text-danger" href="#" id="logout-link">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="shop-link">Shop 🛒</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Filters -->
-<div class="container mt-5">
-  <h4 class="mb-3">Filter Products</h4>
-  <div class="row g-3 align-items-end">
-    <div class="col-md-3">
-      <label class="form-label">Category</label>
-      <select id="categoryFilter" class="form-select">
-        <option value="">All Categories</option>
-      </select>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Fresh Groceries Delivered To Your Doorstep</h1>
+        <p>Fast delivery, quality products, and the best prices. Start shopping today!</p>
+        <a href="#" class="btn btn-light btn-lg mt-3" id="hero-shop-btn">Shop Now 🛒</a>
     </div>
-    <div class="col-md-3">
-      <label class="form-label">Search</label>
-      <input type="text" id="productSearch" class="form-control" placeholder="Search products...">
-    </div>
-    <div class="col-md-2">
-      <label class="form-label">Min Price</label>
-      <input type="text" id="minPrice" class="form-control" placeholder="0">
-    </div>
-    <div class="col-md-2">
-      <label class="form-label">Max Price</label>
-      <input type="text" id="maxPrice" class="form-control" placeholder="1000">
-    </div>
-    <div class="col-md-2">
-      <button id="applyFilters" class="btn btn-primary w-100">Apply</button>
-    </div>
-  </div>
+</section>
 
-  <hr class="my-4">
-  <h4 class="mb-3">Products</h4>
-  <div id="productContainer" class="d-flex flex-wrap gap-3"></div>
-</div>
+<!-- Features Section -->
+<section class="container mt-5 mb-5">
+    <div class="row text-center g-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-basket-fill"></i>
+                <h5>Wide Range of Products</h5>
+                <p>Fresh vegetables, fruits, dairy, snacks and more.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-truck"></i>
+                <h5>Fast Delivery</h5>
+                <p>Get your groceries delivered within hours.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-shield-check"></i>
+                <h5>Quality Guaranteed</h5>
+                <p>Fresh and high-quality products every time.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Footer -->
-<footer class="bg-light text-dark mt-5 pt-4 pb-3 shadow-sm">
-  <div class="container text-center text-md-start">
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <h5 class="fw-bold">GroceryDelivery</h5>
-        <p>Fresh groceries delivered to your doorstep. Quality products, best prices, fast delivery.</p>
-      </div>
-      <div class="col-md-4 mb-3">
-        <h5 class="fw-bold">Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="index.html" class="text-dark text-decoration-none">Home</a></li>
-          <li><a href="categories.html" class="text-dark text-decoration-none">Categories</a></li>
-          <li><a href="cart.html" class="text-dark text-decoration-none">Cart</a></li>
-          <li><a href="login.html" class="text-dark text-decoration-none">Login</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4 mb-3">
-        <h5 class="fw-bold">Contact Us</h5>
-        <p>Email: support@grocerydelivery.com</p>
-        <p>Phone: +1 234 567 890</p>
-        <p>Address: 123 Main Street, Your City</p>
-      </div>
-    </div>
-    <hr>
-    <div class="text-center">&copy; 2025 GroceryDelivery. All Rights Reserved.</div>
-  </div>
+<footer>
+    &copy; 2025 GroceryDelivery. All Rights Reserved.
 </footer>
 
-<!-- Scripts -->
-<script src="js/products_public.js"></script>
-<script src="js/category.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  // Toggle login/logout links
-  document.getElementById("login-nav").style.display = user ? "none" : "block";
-  document.getElementById("register-nav").style.display = user ? "none" : "block";
-  document.getElementById("logout-nav").style.display = user ? "block" : "none";
-
-  // Cart button behavior
-  document.getElementById("cart-nav").addEventListener("click", (e) => {
+   document.getElementById("shop-link").addEventListener("click", (e) => {
+    e.preventDefault();
     if (!user) {
-      e.preventDefault();
-      alert("Please login first to access the cart!");
-      window.location.href = "login.html";
+        alert("Please login first!");
+        window.location.href = "login.html";
+    } else {
+        window.location.href = "home.html";
     }
-  });
+});
 
-  // Logout
-  document.getElementById("logout-link").addEventListener("click", () => {
-    localStorage.clear();
-    window.location.href = "login.html";
-  });
+
+    // Hero shop button
+    document.getElementById("hero-shop-btn").addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!user) {
+            alert("Please login first!");
+            window.location.href = "login.html";
+        } else {
+            window.location.href = "home.html";
+        }
+    });
 });
 </script>
-
 </body>
 </html>
