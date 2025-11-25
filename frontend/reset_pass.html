@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <h2>Forgot Password</h2>
+<input type="email" id="email" placeholder="Enter your email">
+<button id="sendBtn">Send Reset Link</button>
+
+<script>
+document.getElementById("sendBtn").addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+
+    const res = await fetch("http://127.0.0.1:8000/api/forgot-password/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+    alert(data.message || data.error);
+});
+</script>
+</body>
+</html>
