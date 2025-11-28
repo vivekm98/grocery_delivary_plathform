@@ -44,16 +44,24 @@ A full-stack **grocery delivery web app** built with **Django REST Framework** b
 
 ```bash
 # Clone repository
-git clone <your-repo-url>
-cd grocery-delivery/backend
+git clone <https://github.com/vivekm98/grocery_delivary_plathform>
+
 
 # Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate     # Windows
 
+
 # Install dependencies
 pip install -r requirements.txt
+create derictory media
+grocery_delivary_plathform/
+   media/
+        |posters
+        |prducts
+        |category
+cd grocery-delivery/backend
 
 # Configure database in settings.py
 
