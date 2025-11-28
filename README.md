@@ -1,6 +1,4 @@
-Perfect! Here's a **shorter, visually appealing README** for your Grocery Delivery project, with badges and space for GIFs/screenshots. You can copy it as `README.md`:
 
-````markdown
 # Grocery Delivery 🛒
 
 [![Python](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org/)
