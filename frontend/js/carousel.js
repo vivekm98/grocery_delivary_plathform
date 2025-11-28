@@ -1,7 +1,8 @@
+
 const carouselInner = document.getElementById("carousel-inner");
 const carouselIndicators = document.getElementById("carousel-indicators");
 
-fetch("http://localhost:8000/api/posters/")  // DRF API endpoint
+fetch("http://127.0.0.1:8000/api/posters/")  // DRF API endpoint
   .then(res => res.json())
   .then(data => {
     data.forEach((poster, index) => {
@@ -23,3 +24,4 @@ fetch("http://localhost:8000/api/posters/")  // DRF API endpoint
     });
   })
   .catch(err => console.error("Error fetching posters:", err));
+

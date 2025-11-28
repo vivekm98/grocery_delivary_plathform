@@ -18,7 +18,17 @@
     .card p { font-size: 0.9rem; }
     .btn-add { background: #28a745; border: none; }
     .btn-add:hover { background: #218838; }
-    footer { background: #fff; padding: 30px 0; margin-top: 50px; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+
+    footer a:hover {
+              color: #4CAF50;
+            text-decoration: underline;
+         }
+
+     .carousel-img {
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -35,7 +45,7 @@
 </script>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light shadow-sm py-3">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm py-3 mb-3">
   <div class="container">
     <a class="navbar-brand" href="#">GroceryDelivery</a>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -48,6 +58,21 @@
     </div>
   </div>
 </nav>
+
+<div id="bannerCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+  <div class="carousel-indicators" id="carousel-indicators"></div>
+  <div class="carousel-inner" id="carousel-inner"></div>
+
+  <!-- Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
 <!-- Filters -->
 <div class="container mt-4">
@@ -77,13 +102,52 @@
 </div>
 
 <!-- Footer -->
-<footer class="text-center text-muted">
-    <p>&copy; 2025 GroceryDelivery. Fresh groceries delivered to your doorstep.</p>
+<hr>
+<footer class="bg-light text-dark mt-5 pt-4 pb-3 shadow-sm">
+    <div class="container text-center text-md-start">
+
+        <div class="row">
+
+            <!-- About -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">GroceryDelivery</h5>
+                <p>Fresh groceries delivered to your doorstep. Quality products, best prices, fast delivery.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="index.html" class="text-dark text-decoration-none">Home</a></li>
+                    <li><a href="categories.html" class="text-dark text-decoration-none">Categories</a></li>
+                    <li><a href="cart.html" class="text-dark text-decoration-none">Cart</a></li>
+                    <li><a href="login.html" class="text-dark text-decoration-none">Login</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Contact Us</h5>
+                <p>Email: support@grocerydelivery.com</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Main Street, Your City</p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            &copy; 2025 GroceryDelivery. All Rights Reserved.
+        </div>
+
+    </div>
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/product_login.js"></script>
-<script src="js/category.js"></script>
+<script src="js/carousel.js"></script>
 
 <script>
 
