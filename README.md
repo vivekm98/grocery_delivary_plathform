@@ -24,7 +24,8 @@ A full-stack **grocery delivery web app** built with **Django REST Framework** b
 
 ![Home Page](screenshots/home.png)  
 ![Cart Page](screenshots/cart.png)  
-![Carousel Demo](screenshots/carousel.gif)
+![Login page](screenshots/login.png)
+![Nav Page](screenshots/nav.png)  
 
 *(Replace these with your actual screenshots or GIFs)*
 
