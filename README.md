@@ -20,14 +20,12 @@ A full-stack **grocery delivery web app** built with **Django REST Framework** b
 
 ---
 
-## 🎨 Screenshots / Demo
+## 🎨 Screenshots 
 
 ![Home Page](screenshots/home.png)  
 ![Cart Page](screenshots/cart.png)  
 ![Login page](screenshots/login.png)
 ![Nav Page](screenshots/nav.png)  
-
-*(Replace these with your actual screenshots or GIFs)*
 
 ---
 
@@ -91,14 +89,10 @@ Then open `frontend/home.html` in your browser.
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
----
 
 ## ✉️ Contact
-  Name – vivekmore45678@gmail.com
+  Name – Vivek Ramesh More
+  Email - vivekmore45678@gmail.com
   GitHub: https://github.com/vivekm98/
 
 ```
